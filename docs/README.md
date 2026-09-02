@@ -6,6 +6,13 @@ The RaceDay system is a web-based event management system built for South Africa
 FEATURES:
 The RaceDay system should allow the users to log in either as a event organizer or as a participant. Once the user has logged in, they should be able do different things depending on how they logged in. If logged in as an event organizer, the user should be able to create events and manage other events they have previously created. Organizers can view the participants who have registered and entered the event, they can monitor the results of participants after the race has concluded. If the user has logged in as a participant, they can browse upcoming events, enter into events they are interested in, and can review their personal results from past events. Participants can view the route in which the race will take as well as the weather forecast on race day. 
 
+PROJECT STRUCTURE:
+docs: 
+  README.md
+  RaceDay system ERD.pdf
+  Role-based access matrix.pdf
+  User roles
+
 PROJECT STATUS:
 In Progress. 
 
