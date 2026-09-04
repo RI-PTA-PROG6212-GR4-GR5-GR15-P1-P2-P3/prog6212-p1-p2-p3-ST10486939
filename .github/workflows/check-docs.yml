@@ -29,8 +29,8 @@ jobs:
 
       - name: Check required files
         run: |
-          if [ ! -f "docs/API Endpoint Pla.pdf" ]; then
-            echo "ERROR: API Endpoint Pla.pdf is missing."
+          if [ ! -f "docs/API Endpoint Plan.pdf" ]; then
+            echo "ERROR: API Endpoint Plan.pdf is missing."
             exit 1
           fi
 
@@ -54,8 +54,8 @@ jobs:
             exit 1
           fi
 
-          if [ ! -f "docs/User roles.png" ]; then
-            echo "ERROR: User roles.png is missing."
+          if [ ! -f "docs/User roles" ]; then
+            echo "ERROR: User roles is missing."
             exit 1
           fi
 
