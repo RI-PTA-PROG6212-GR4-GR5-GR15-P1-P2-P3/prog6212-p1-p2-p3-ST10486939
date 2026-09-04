@@ -1,67 +1,26 @@
-name: Check Documentation
+name: Docs Structure Check
 
 on:
   push:
-    branches:
-      - main
-      - master
   pull_request:
-    branches:
-      - main
-      - master
 
 jobs:
-  check-docs:
-    runs-on: ubuntu-latest
+  check-docs: 
+  runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Check docs folder
-        run: |
-          if [ ! -d "docs" ]; then
-            echo "ERROR: docs folder does not exist."
-            exit 1
-          fi
+    - name: Check docs folder
+      run: test -d docs
 
-          echo "SUCCESS: docs folder exists."
-
-      - name: Check required files
-        run: |
-          if [ ! -f "docs/API Endpoint Plan.pdf" ]; then
-            echo "ERROR: API Endpoint Plan.pdf is missing."
-            exit 1
-          fi
-
-          if [ ! -f "docs/README.md" ]; then
-            echo "ERROR: README.md is missing."
-            exit 1
-          fi
-
-          if [ ! -f "docs/RaceDay SQL Script.sql" ]; then
-            echo "ERROR: RaceDay SQL Script.sql is missing."
-            exit 1
-          fi
-
-          if [ ! -f "docs/RaceDay system ERD.png" ]; then
-            echo "ERROR: RaceDay system ERD.png is missing."
-            exit 1
-          fi
-
-          if [ ! -f "docs/Role-based access matrix.pdf" ]; then
-            echo "ERROR: Role-based access matrix.pdf is missing."
-            exit 1
-          fi
-
-          if [ ! -f "docs/User roles" ]; then
-            echo "ERROR: User roles is missing."
-            exit 1
-          fi
-
-          if [ ! -f "docs/updated raceday systems.png" ]; then
-            echo "ERROR: updated raceday systems.png is missing."
-            exit 1
-          fi
-
-          echo "SUCCESS: All required documentation files are present."
+    - name: Check required files
+      run: |
+        test -f docs/API Endpoint Plan.pdf
+        test -f docs/README.md
+        test -f docs/RaceDay SQL Script.sql
+        test -f docs/RaceDay system ERD.png
+        test -f docs/Role-based access matrix.pdf
+        test -f docs/User role
+        test if docs/updated raceday system.png
