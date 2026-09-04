@@ -8,10 +8,12 @@ The RaceDay system should allow the users to log in either as a event organizer 
 
 PROJECT STRUCTURE:
 docs: 
-  README.md
-  RaceDay system ERD.pdf
-  Role-based access matrix.pdf
-  User roles
+  API Endpoint Plan.pdf, 
+  README.md, 
+  RaceDay system ERD.png, 
+  Role-based access matrix.pdf, 
+  User roles, 
+  updated raceday system.png
 
 PROJECT STATUS:
 In Progress. 
