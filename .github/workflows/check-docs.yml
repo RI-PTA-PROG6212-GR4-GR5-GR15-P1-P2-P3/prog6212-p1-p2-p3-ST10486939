@@ -6,21 +6,21 @@ on:
 
 jobs:
   check-docs:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Check docs folder
-      run: test -d docs
+      - name: Check docs folder
+        run: test -d docs
 
-    - name: Check required files
-      run: |
-        test -f docs/API Endpoint Plan.pdf
-        test -f docs/README.md
-        test -f docs/RaceDay SQL Script.sql
-        test -f docs/RaceDay system ERD.png
-        test -f docs/Role-based access matrix.pdf
-        test -f docs/User role
-        test if docs/updated raceday system.png
+      - name: Check required files
+        run: |
+          test -f "docs/API Endpoint Plan.pdf"
+          test -f "docs/README.md"
+          test -f "docs/RaceDay SQL Script.sql"
+          test -f "docs/RaceDay system ERD.png"
+          test -f "docs/Role-based access matrix.pdf"
+          test -f "docs/User roles"
+          test -f "docs/updated raceday systems.png"
