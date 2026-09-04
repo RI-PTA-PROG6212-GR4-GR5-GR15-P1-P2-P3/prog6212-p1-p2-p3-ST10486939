@@ -60,4 +60,3 @@ jobs:
           echo ""
           echo "Documentation check PASSED."
           echo "All required files are present in the docs folder."
-```
