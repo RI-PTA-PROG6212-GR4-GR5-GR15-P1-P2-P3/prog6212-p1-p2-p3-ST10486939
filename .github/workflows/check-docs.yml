@@ -1,8 +1,14 @@
-name: Docs Structure Check
+name: Check Documentation
 
 on:
   push:
+    branches:
+      - main
+      - master
   pull_request:
+    branches:
+      - main
+      - master
 
 jobs:
   check-docs:
@@ -12,15 +18,51 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check docs folder
-        run: test -d docs
-
-      - name: Check required files
+      - name: Show repository files
         run: |
-          test -f "docs/API Endpoint Plan.pdf"
-          test -f "docs/README.md"
-          test -f "docs/RaceDay SQL Script.sql"
-          test -f "docs/RaceDay system ERD.png"
-          test -f "docs/Role-based access matrix.pdf"
-          test -f "docs/User roles"
-          test -f "docs/updated raceday systems.png"
+          echo "Files in repository:"
+          find . -maxdepth 3 -type f | sort
+
+      - name: Check docs folder
+        run: |
+          if [ ! -d "docs" ]; then
+            echo "ERROR: docs folder does not exist."
+            exit 1
+          fi
+
+          echo "SUCCESS: docs folder exists."
+          echo ""
+          echo "Contents of docs folder:"
+          ls -la "docs"
+
+      - name: Check required documentation files
+        run: |
+          files=(
+            "API Endpoint Plan.pdf"
+            "README.md"
+            "RaceDay SQL Script.sql"
+            "RaceDay system ERD.png"
+            "Role-based access matrix.pdf"
+            "User roles"
+            "updated raceday systems.png"
+          )
+
+          failed=0
+
+          for file in "${files[@]}"; do
+            if [ -f "docs/$file" ]; then
+              echo "FOUND: $file"
+            else
+              echo "MISSING: $file"
+              failed=1
+            fi
+          done
+
+          if [ "$failed" -eq 1 ]; then
+            echo ""
+            echo "ERROR: One or more required files are missing."
+            exit 1
+          fi
+
+          echo ""
+          echo "SUCCESS: All required documentation files are present."
