@@ -1,0 +1,63 @@
+
+name: Check Documentation
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  check-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check docs folder exists
+        run: |
+          if [ ! -d "docs" ]; then
+            echo "ERROR: docs folder does not exist."
+            exit 1
+          fi
+
+          echo "docs folder exists."
+
+      - name: Check required documentation files
+        run: |
+          required_files=(
+            "API Endpoint Pla.pdf"
+            "README.md"
+            "RaceDay SQL Script.sql"
+            "RaceDay system ERD.png"
+            "Role-based access matrix.pdf"
+            "User roles, updated raceday system.png"
+          )
+
+          missing_files=0
+
+          for file in "${required_files[@]}"; do
+            if [ ! -f "docs/$file" ]; then
+              echo "ERROR: Missing file: docs/$file"
+              missing_files=1
+            else
+              echo "FOUND: docs/$file"
+            fi
+          done
+
+          if [ "$missing_files" -eq 1 ]; then
+            echo ""
+            echo "Documentation check FAILED."
+            echo "One or more required files are missing from the docs folder."
+            exit 1
+          fi
+
+          echo ""
+          echo "Documentation check PASSED."
+          echo "All required files are present in the docs folder."
+```
