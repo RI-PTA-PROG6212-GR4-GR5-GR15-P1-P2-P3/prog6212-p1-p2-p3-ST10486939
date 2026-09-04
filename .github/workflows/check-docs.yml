@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  check-docs: 
+  check-docs:
   runs-on: ubuntu-latest
 
   steps:
