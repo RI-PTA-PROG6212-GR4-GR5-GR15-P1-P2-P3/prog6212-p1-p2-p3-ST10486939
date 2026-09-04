@@ -44,7 +44,7 @@ jobs:
             "RaceDay system ERD.png"
             "Role-based access matrix.pdf"
             "User roles"
-            "updated raceday systems.png"
+            "updated raceday system.png"
           )
 
           failed=0
