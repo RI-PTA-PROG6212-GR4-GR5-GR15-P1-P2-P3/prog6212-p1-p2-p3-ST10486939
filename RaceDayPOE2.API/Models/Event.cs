@@ -2,7 +2,7 @@
 {
     public class Event
     {
-        public Guid eventID { get; set; }
+        public int eventID { get; set; }
         public required int organizerID { get; set; }
         public required string eventName { get; set; }
         public required string eventLocation { get; set; }

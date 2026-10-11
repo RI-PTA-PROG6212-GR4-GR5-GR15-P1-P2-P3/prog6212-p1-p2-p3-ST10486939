@@ -18,5 +18,18 @@ namespace RaceDayPOE2.API.Data
         public DbSet<Participant> Participants { get; set; }
         public DbSet<ParticipantResults> ParticipantResults { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+
+        protected override void OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Category>().ToTable("Category");
+            modelBuilder.Entity<Entries>().ToTable("Entries");
+            modelBuilder.Entity<Event>().ToTable("Event");
+            modelBuilder.Entity<EventOrganizer>().ToTable("EventOrganizer");
+            modelBuilder.Entity<Participant>().ToTable("Participant");
+            modelBuilder.Entity<ParticipantResults>().ToTable("ParticipantResults");
+            modelBuilder.Entity<UserRole>().ToTable("UserRole");
+        }
     }
 }
