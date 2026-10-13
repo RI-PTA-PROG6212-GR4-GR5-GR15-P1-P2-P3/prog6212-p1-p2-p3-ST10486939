@@ -23,13 +23,57 @@ namespace RaceDayPOE2.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Category>().ToTable("Category");
-            modelBuilder.Entity<Entries>().ToTable("Entries");
-            modelBuilder.Entity<Event>().ToTable("Event");
-            modelBuilder.Entity<EventOrganizer>().ToTable("EventOrganizer");
-            modelBuilder.Entity<Participant>().ToTable("Participant");
-            modelBuilder.Entity<ParticipantResults>().ToTable("ParticipantResults");
-            modelBuilder.Entity<UserRole>().ToTable("UserRole");
+            //category
+            modelBuilder.Entity<Category>()
+                .ToTable("Category")
+                .HasKey(c => c.categoryID);
+            modelBuilder.Entity<Category>()
+                .Property(c => c.categoryID)
+                .UseIdentityColumn();
+
+            //entries
+            modelBuilder.Entity<Entries>()
+                .ToTable("Entries")
+                .HasKey(e => e.entryID);
+            modelBuilder.Entity<Entries>()
+                .Property(e => e.entryID)
+                .UseIdentityColumn();
+
+            //event
+            modelBuilder.Entity<Event>()
+                .ToTable("Event")
+                .HasKey(e => e.eventID);
+            modelBuilder.Entity<Event>()
+                .Property(e => e.eventID)
+                .UseIdentityColumn();
+
+            //EventOrganizer
+            modelBuilder.Entity<EventOrganizer>()
+                .ToTable("EventOrganizer")
+                .HasKey(o => o.organizerID);
+            modelBuilder.Entity<EventOrganizer>()
+                .Property(o => o.organizerID)
+                .UseIdentityColumn();
+
+            //Participant
+            modelBuilder.Entity<Participant>()
+                .ToTable("Participant")
+                .HasKey(p => p.participantID);
+            modelBuilder.Entity<Participant>()
+                .Property(p => p.participantID)
+                .UseIdentityColumn();
+
+            modelBuilder.Entity<ParticipantResults>()
+                .ToTable("ParticipantResults")
+                .HasNoKey();
+
+            //UserRole
+            modelBuilder.Entity<UserRole>()
+                .ToTable("UserRole")
+                .HasKey(r => r.roleID);
+            modelBuilder.Entity<UserRole>()
+                .Property(r => r.roleID)
+                .UseIdentityColumn();
         }
     }
 }

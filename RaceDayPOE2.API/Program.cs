@@ -3,6 +3,7 @@ using RaceDayPOE2.API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using RaceDayPOE2.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,4 +65,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+if(Environment.GetEnvironmentVariable(
+        "RACEDAY_RUN_PASSWORD_MIGRATION") == "true")
+{
+    await PasswordMigrationRunner.RunAsync(app.Services);
+}
+else
+{
+    app.Run();
+}

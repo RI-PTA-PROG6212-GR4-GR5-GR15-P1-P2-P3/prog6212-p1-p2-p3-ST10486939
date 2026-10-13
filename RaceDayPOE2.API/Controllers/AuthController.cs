@@ -1,13 +1,14 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RaceDayPOE2.API.Data;
 using RaceDayPOE2.API.DTOs;
 using RaceDayPOE2.API.Models;
+using System.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace RaceDayPOE2.API.Controllers
 {
@@ -102,8 +103,8 @@ namespace RaceDayPOE2.API.Controllers
                     roleID = userRole.roleID,
                     emailAddress = email
                 };
-
-                participant.password =
+                //hashing password for new participant
+                participant.passwordHash =
                     _participantHasher.HashPassword(
                         participant, request.Password);
 
@@ -128,7 +129,8 @@ namespace RaceDayPOE2.API.Controllers
                     emailAddress = email
                 };
 
-                organizer.password = _organizerHasher.HashPassword(
+                //hashing password for new organizers
+                organizer.passwordHash = _organizerHasher.HashPassword(
                     organizer, request.Password);
 
                 _context.EventOrganizers.Add(organizer);
@@ -159,23 +161,38 @@ namespace RaceDayPOE2.API.Controllers
 
             string email = request.EmailAddress.Trim().ToLowerInvariant();
 
+            //participant login
             var participant = await _context.Participants.FirstOrDefaultAsync(p =>
                 p.emailAddress.ToLower() == email);
 
-            if (participant != null && !string.IsNullOrEmpty(participant.password))
+            if (participant != null && !string.IsNullOrEmpty(participant.passwordHash))
             {
                 var result = _participantHasher.VerifyHashedPassword(
                     participant,
-                    participant.password,
+                    participant.passwordHash,
                     request.Password);
 
-                if(result != PasswordVerificationResult.Failed)
+                if (result != PasswordVerificationResult.Failed)
                 {
+                    //update hash is recommended
+                    if (result == PasswordVerificationResult.SuccessRehashNeeded)
+                    {
+                        participant.passwordHash = _participantHasher.HashPassword(
+                            participant, request.Password);
+
+                        await _context.SaveChangesAsync();
+                    }
+
                     var role = await _context.UserRoles.FirstOrDefaultAsync(r =>
                     r.roleID == participant.roleID);
 
                     if (role == null)
-                        return Unauthorized(new { message = "Invalid login details." });
+                    {
+                        return Unauthorized(new
+                        {
+                            message = "Invalid email address or password."
+                        });
+                    }
 
                     return CreateLoginResponse(
                         participant.participantID,
@@ -185,23 +202,33 @@ namespace RaceDayPOE2.API.Controllers
                 }
             }
 
-            var organizer = await _context.EventOrganizers.FirstOrDefaultAsync(o => 
+            //organizer login
+            var organizer = await _context.EventOrganizers.FirstOrDefaultAsync(o =>
             o.emailAddress.ToLower() == email);
 
-            if(organizer != null && !string.IsNullOrEmpty(organizer.password))
+            if (organizer != null && !string.IsNullOrWhiteSpace(organizer.passwordHash))
             {
                 var result = _organizerHasher.VerifyHashedPassword(
                     organizer,
-                    organizer.password,
+                    organizer.passwordHash,
                     request.Password);
 
-                if(result != PasswordVerificationResult.Failed)
+                if (result != PasswordVerificationResult.Failed)
                 {
+                    if (result == PasswordVerificationResult.SuccessRehashNeeded)
+                    {
+                        organizer.passwordHash = _organizerHasher.HashPassword(
+                            organizer, request.Password);
+
+                        await _context.SaveChangesAsync();
+                    }
+
                     var role = await _context.UserRoles.FirstOrDefaultAsync(r =>
                     r.roleID == organizer.roleID);
 
                     if (role == null)
                         return Unauthorized(new { message = "Invalid login details." });
+
 
                     return CreateLoginResponse(
                         organizer.organizerID,
@@ -210,6 +237,7 @@ namespace RaceDayPOE2.API.Controllers
                         role.description);
                 }
             }
+        
 
             return Unauthorized(
                 new { message = "Invalid email address or password." });
@@ -224,6 +252,11 @@ namespace RaceDayPOE2.API.Controllers
             string? key = _configuration["Jwt:Key"];
             string? issuer = _configuration["Jwt:Issuer"];
             string? audience = _configuration["Jwt:Audience"];
+            //temporarily adding
+            Console.WriteLine($"JWT key loaded: {!string.IsNullOrWhiteSpace(key)}");
+            Console.WriteLine($"JWT key length in bytes: {Encoding.UTF8.GetByteCount(key ?? "")}");
+            Console.WriteLine($"JWT issuer loaded: {!string.IsNullOrWhiteSpace(issuer)}");
+            Console.WriteLine($"JWT audience loaded: {string.IsNullOrWhiteSpace(audience)}");
 
             if(string.IsNullOrWhiteSpace(key) ||
                 Encoding.UTF8.GetByteCount(key) < 32 ||
