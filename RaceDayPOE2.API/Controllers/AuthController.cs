@@ -252,11 +252,6 @@ namespace RaceDayPOE2.API.Controllers
             string? key = _configuration["Jwt:Key"];
             string? issuer = _configuration["Jwt:Issuer"];
             string? audience = _configuration["Jwt:Audience"];
-            //temporarily adding
-            Console.WriteLine($"JWT key loaded: {!string.IsNullOrWhiteSpace(key)}");
-            Console.WriteLine($"JWT key length in bytes: {Encoding.UTF8.GetByteCount(key ?? "")}");
-            Console.WriteLine($"JWT issuer loaded: {!string.IsNullOrWhiteSpace(issuer)}");
-            Console.WriteLine($"JWT audience loaded: {string.IsNullOrWhiteSpace(audience)}");
 
             if(string.IsNullOrWhiteSpace(key) ||
                 Encoding.UTF8.GetByteCount(key) < 32 ||
