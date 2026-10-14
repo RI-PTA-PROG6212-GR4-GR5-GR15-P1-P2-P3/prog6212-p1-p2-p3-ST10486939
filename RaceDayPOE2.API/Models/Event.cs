@@ -10,5 +10,6 @@
         public required string distance { get; set; }
         public required int categoryID { get; set; }
         public required string type { get; set; }
+        public DateTime eventDate { get; set; }
     }
 }
