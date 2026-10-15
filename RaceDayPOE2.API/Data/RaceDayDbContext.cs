@@ -65,7 +65,7 @@ namespace RaceDayPOE2.API.Data
 
             modelBuilder.Entity<ParticipantResults>()
                 .ToTable("ParticipantResults")
-                .HasNoKey();
+                .HasKey(r => r.resultID);
 
             //UserRole
             modelBuilder.Entity<UserRole>()
