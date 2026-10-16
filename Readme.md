@@ -18,9 +18,34 @@ docs:
   User roles, 
   updated raceday system.png
 
-Successfull Build Screenshot: 
+Succesfull Build Screenshot PART1: 
 <img width="632" height="482" alt="success workflow" src="https://github.com/user-attachments/assets/72bed10a-8b2d-4a98-a415-6dbc46f90045" />
 
+PROJECT SET-UP:
+Before running the RaceDay API ensure that you have the follwoing installed:
+- Visual Studio 2022
+- .NET SDK version required (NET 8.0)
+- SQL SERVER MANAGEMENT STUDIO
+
+  USER ROLES:
+  1.Participant
+  A participant is a registered user that is taking part in running, walking, or cycling events.
+  Participants can register an account and login, view their profile and update details, view available events and their categories, enroll in an event.
+
+  2. Event Organizer
+  An event organizer is a registered user responsible for creating and managing RaceDay events.
+Organizers can:
+- Register an organizer account and log in
+- View their profile and update their details where supported
+- Create new events
+- Delete events where they have required permissions
+
+RUN INSTRUCTIONS:
+to run the RaceDay APIs:
+- open the solution in Visual Studio 2022
+- build the solution
+- run the project
+- Swagger UI should open in your browser with the API-endpoints 
 
 PROJECT STATUS:
 In Progress. 
