@@ -1,0 +1,51 @@
+
+name: RaceDay Build and Test
+
+on:
+  push:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build and Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Find solution
+        id: solution
+        shell: bash
+        run: |
+          SOLUTION=$(find . -maxdepth 5 -type f \
+            \( -name "*.sln" -o -name "*.slnx" \) \
+            -print -quit)
+
+          if [ -z "$SOLUTION" ]; then
+            echo "ERROR: No .sln or .slnx file found."
+            exit 1
+          fi
+
+          echo "path=$SOLUTION" >> "$GITHUB_OUTPUT"
+          echo "Found solution: $SOLUTION"
+
+      - name: Restore dependencies
+        run: dotnet restore "${{ steps.solution.outputs.path }}"
+
+      - name: Build solution
+        run: dotnet build "${{ steps.solution.outputs.path }}" --configuration Release --no-restore
+
+      - name: Run all tests
+        run: dotnet test "${{ steps.solution.outputs.path }}" --configuration Release --no-build --logger "console;verbosity=normal"
