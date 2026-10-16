@@ -1,5 +1,5 @@
 RACEDAY SYSTEM
-
+PART 2 IS IN MASTER BRANCH
 DESCRIPTION: 
 The RaceDay system is a web-based event management system built for South African running, walking, and cycling events. The system is meant to be used by both event organizers as well as participants. Event organizers will be able to create and manage events, categories as well as participants results. Participants should be able to use the system to browse events, enter events, track personal performance history and prepare for race day using route and weather information. 
 
@@ -20,6 +20,10 @@ docs:
 
 Succesfull Build Screenshot PART1: 
 <img width="632" height="482" alt="success workflow" src="https://github.com/user-attachments/assets/72bed10a-8b2d-4a98-a415-6dbc46f90045" />
+
+SUCCESSFULL build screenshot PART 2:
+<img width="1920" height="1008" alt="Add JWT environment variables for testing · RI-PTA-PROG6212-GR4-GR5-GR15-P1-P2-P3_prog6212-p1-p2-p3-ST10486939@4e0fcf6 - Brave 16-Oct-26 8_15_27 PM" src="https://github.com/user-attachments/assets/bcf07020-0a92-40bb-a172-072d9a99efd2" />
+
 
 PROJECT SET-UP:
 Before running the RaceDay API ensure that you have the follwoing installed:
