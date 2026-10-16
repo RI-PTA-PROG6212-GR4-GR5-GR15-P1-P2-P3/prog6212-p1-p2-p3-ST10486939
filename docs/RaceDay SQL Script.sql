@@ -125,3 +125,28 @@ VALUES	(300, 101),
 		(302, 103),
 		(303, 102),
 		(301, 104);
+
+--ALTERING THE DATABASE TO ACCOMODATE PART 2
+ALTER TABLE Entries
+ADD categoryID int NULL;
+
+ALTER TABLE Entries
+ADD CONSTRAINT FK_Entries_Category
+FOREIGN KEY (categoryID)
+REFERENCES Category(categoryID);
+
+UPDATE Entries SET categoryID = 1 WHERE eventID = 300;
+UPDATE Entries SET categoryID = 1 WHERE eventID = 301;
+UPDATE Entries SET categoryID = 1 WHERE eventID = 302;
+UPDATE Entries SET categoryID = 1 WHERE eventID = 303;
+
+--ALTERING RESULT TABLE 
+ALTER TABLE dbo.ParticipantResults
+ADD resultID int IDENTITY(1, 1) NOT NULL;
+
+ALTER TABLE dbo.ParticipantResults
+ADD CONSTRAINT PK_ParticipantResults
+PRIMARY KEY(resultID);
+
+ALTER TABLE dbo.ParticipantResults
+ADD finishingPosition int NULL;
