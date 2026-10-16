@@ -85,7 +85,7 @@ namespace RaceDayPOE2.API.Controllers
 
         //UPDATING EVENTS - only organizers of the event can update their own event
         //PUT: /api/events/{eventid}
-        [HttpPut("{eventId:int}")]
+        [HttpPut("{id:int}")]
         [Authorize(Roles = "Organizer")]
         public async Task<IActionResult> UpdateEvent(
             int id,
@@ -158,7 +158,7 @@ namespace RaceDayPOE2.API.Controllers
 
         //DELETE EVENTS - deletes or cancels an event managed by organizer
         //DELETE: /api/events/{eventId}
-        [HttpDelete("{eventId:int}")]
+        [HttpDelete("{id:int}")]
         [Authorize(Roles = "Organizer")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
