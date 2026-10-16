@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -41,7 +40,7 @@ namespace RaceDayPOE2.API.Test
                             new Dictionary<string, string?>
                             {
                                 ["Jwt:Key"] =
-                                    "TestOnlySigningKey12345678901234567890",
+                                    "RaceDay-Test-Only-Signing-Key-At-Least-32-Characters",
                                 ["Jwt:Issuer"] = "RaceDayTests",
                                 ["Jwt:Audience"] = "RaceDayTests"
                             });
