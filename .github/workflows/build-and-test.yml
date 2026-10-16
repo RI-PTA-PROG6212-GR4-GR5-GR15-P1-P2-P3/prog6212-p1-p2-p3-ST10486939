@@ -48,4 +48,8 @@ jobs:
         run: dotnet build "${{ steps.solution.outputs.path }}" --configuration Release --no-restore
 
       - name: Run all tests
-        run: dotnet test "${{ steps.solution.outputs.path }}" --configuration Release --no-build --logger "console;verbosity=normal"
+        env:
+          Jwt__Key: "RaceDay-Test-Only-Signing-Key-At-Least-32-Characters"
+          Jwt__Issuer: "RaceDayTests"
+          Jwt__Audience: "RaceDayTests"
+        run: dotnet test "${{ steps.solution.outputs.path }}" --configuration Release --no-build
