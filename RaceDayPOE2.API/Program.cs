@@ -50,9 +50,12 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 //configure authentication
-var jwtKey = builder.Configuration["Jwt:Key"]
-    ?? throw new InvalidOperationException(
-        "JWT signing key is missing.");
+var jwtKey = builder.Configuration["Jwt:Key"];
+if(string.IsNullOrEmpty(jwtKey))
+{
+    throw new InvalidOperationException(
+        "JWT key signing key is missing.");
+}
 
 builder.Services.AddAuthentication(options =>
 {

@@ -90,7 +90,7 @@ namespace RaceDayPOE2.API.Controllers
         }
 
         //GET api/enrollments/me
-        //participants can view only theyr own enrollments 
+        //participants can view only their own enrollments 
         [HttpGet("me")]
         [Authorize(Roles = "Participant")]
         public async Task<IActionResult> GetMyEnrollments()
