@@ -71,43 +71,56 @@ namespace RaceDayPOE2.MVC.Controllers
 
                 return View(model);
             }
-            /*
-            if (!ModelState.IsValid)
+        }
+
+        //REGISTRATION
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if(!ModelState.IsValid)
             {
                 return View(model);
             }
 
             try
             {
-                var response = await _apiService.PostAsync<LoginViewModel, LoginResponse>(
-                    "api/auth/login", model);
-
-                if(response == null || string.IsNullOrWhiteSpace(response.Token) || response.User == null)
+                var registrationData = new
                 {
-                    ModelState.AddModelError(string.Empty, "The API returned an invalid login response.");
+                    name = model.Name,
+                    emailAddress = model.EmailAddress,
+                    password = model.Password,
+                    role = model.Role,
+                    age = model.Age
+                };
 
-                    return View(model);
-                }
+                await _apiService.PostAsync<object, System.Text.Json.JsonElement>(
+                    "api/auth/register", registrationData);
 
-                //Store the JWT & user information in server-side session
-                HttpContext.Session.SetString("JWTToken", response.Token);
-                HttpContext.Session.SetString("UserId", response.User.Id.ToString());
-                HttpContext.Session.SetString("UserName", response.User.Name);
-                HttpContext.Session.SetString("UserEmail", response.User.EmailAddress);
-                HttpContext.Session.SetString("UserRole", response.User.Role);
+                TempData["RegistrationSuccess"] =
+                    "Your account has been created successfully. Please log in.";
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login");
             }
-            catch (HttpRequestException ex) 
-                when (ex.StatusCode == HttpStatusCode.Unauthorized)
+            catch (HttpRequestException)
             {
-                ModelState.AddModelError(
-                    string.Empty,
-                    "Unable to communicate with the RaceDay API. Please try again.");
+                ModelState.AddModelError(string.Empty,
+                    "Registration failed. Please check your details and try again.");
 
                 return View(model);
             }
-            */
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An unexpected error occurred during registration.");
+
+                return View(model);
+            }
         }
 
         //LOG OUT
