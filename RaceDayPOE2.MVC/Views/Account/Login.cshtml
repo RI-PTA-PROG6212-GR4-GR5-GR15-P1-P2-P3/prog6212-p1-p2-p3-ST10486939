@@ -1,4 +1,6 @@
-﻿@model RaceDayPOE2.MVC.Models.ViewModels.LoginViewModel
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model RaceDayPOE2.MVC.Models.ViewModels.LoginViewModel
 
 @{
 	ViewData["Title"] = "Login";
@@ -11,6 +13,9 @@
 			<h2 class="text-center mb-4">Login to RaceDay</h2>
 
 			<form asp-controller="Account" asp-action="Login" method="post">
+
+				@Html.AntiForgeryToken()
+
 			<div asp-validation-summary="ModelOnly" class="text-danger mb-3">
 			</div>
 
@@ -30,7 +35,7 @@
 				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
 
-			<button type="submit" class="btn btn-primary w-100">
+			<button type="submit" class="btn btn-primary">
 				Login
 			</button>
 

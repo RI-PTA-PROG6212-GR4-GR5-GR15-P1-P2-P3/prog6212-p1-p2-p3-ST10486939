@@ -1,0 +1,24 @@
+﻿@{
+	ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5 text-center">
+	<h1>Welcome to RaceDay!</h1>
+
+	<p class="lead">
+		Your platform for running, walking and cycling events.
+	</p>
+
+	@if (Context.Session.GetString("JWTToken") == null)
+	{
+		<a asp-controller="Account" asp-action="Login" class="btn btn-primary">
+			Login
+		</a>
+	}
+	else
+	{
+		<h4>Welcome, @Context.Session.GetString("UserName")!</h4>
+
+		<p>Your role: @Context.Session.GetString("UserRole")</p>
+	}
+</div>
