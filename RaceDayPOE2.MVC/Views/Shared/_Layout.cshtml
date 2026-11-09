@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - RaceDay</title>
 
     <link rel="stylesheet"
@@ -12,25 +13,19 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light border-bottom shadow-sm">
-            <div class="container-fluid">
 
-                <a class="navbar-brand"
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar navbar-expand navbar-dark raceday-navbar">
+            <div class="container">
+
+                <a class="navbar-brand raceday-brand"
                    asp-controller="Home"
                    asp-action="Index">
-                    RaceDay
+                    RACE<span>DAY</span>
                 </a>
 
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarContent">
-
+                <div class="navbar-collapse">
                     <ul class="navbar-nav me-auto">
 
                         <li class="nav-item">
@@ -60,6 +55,17 @@
                             </li>
                         }
 
+                        @if (Context.Session.GetString("UserRole") == "Organizer")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="OrganizerEvents"
+                                   asp-action="Index">
+                                    My Events
+                                </a>
+                            </li>
+                        }
+
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
@@ -67,7 +73,7 @@
                         @if (Context.Session.GetString("JWTToken") != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link"
+                                <a class="nav-link raceday-logout"
                                    asp-controller="Account"
                                    asp-action="Logout">
                                     Logout
@@ -85,7 +91,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link"
+                                <a class="nav-link raceday-register"
                                    asp-controller="Account"
                                    asp-action="Register">
                                     Register
@@ -94,17 +100,30 @@
                         }
 
                     </ul>
-
                 </div>
+
             </div>
         </nav>
     </header>
 
-    <main role="main" class="container mt-4">
+    <!-- Main content -->
+    <main role="main" class="container raceday-main">
         @RenderBody()
     </main>
 
+    <!-- Footer -->
+    <footer class="raceday-footer">
+        <div class="container text-center">
+            <p>
+                &copy; @DateTime.Now.Year RaceDay.
+                Ready. Set. Race.
+            </p>
+        </div>
+    </footer>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

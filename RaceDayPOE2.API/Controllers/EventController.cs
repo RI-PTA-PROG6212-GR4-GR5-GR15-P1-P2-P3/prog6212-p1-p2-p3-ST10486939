@@ -223,5 +223,22 @@ namespace RaceDayPOE2.API.Controllers
 
             return int.TryParse(idClaim, out organizerId);
         }
+
+        //API endpoint for organizer's events
+        [HttpGet("me")]
+        [Authorize(Roles = "Organizer")]
+        public async Task<IActionResult> GetMyEvents()
+        {
+            if (!TryGetOrganizerId(out int organizerID))
+                return Unauthorized("Invalid organizer ID.");
+
+            var events = await _context.Events
+                .AsNoTracking()
+                .Where(e => e.organizerID == organizerID)
+                .OrderBy(e => e.eventDate)
+                .ToListAsync();
+
+            return Ok(events);
+        }
     }
 }
