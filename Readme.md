@@ -1,5 +1,9 @@
 RACEDAY SYSTEM
+
 PART 2 IS IN MASTER BRANCH
+
+PART 3 IS ALSO IN THE MASTER BRANCH
+
 DESCRIPTION: 
 The RaceDay system is a web-based event management system built for South African running, walking, and cycling events. The system is meant to be used by both event organizers as well as participants. Event organizers will be able to create and manage events, categories as well as participants results. Participants should be able to use the system to browse events, enter events, track personal performance history and prepare for race day using route and weather information. 
 
@@ -7,6 +11,7 @@ FEATURES:
 The RaceDay system should allow the users to log in either as a event organizer or as a participant. Once the user has logged in, they should be able do different things depending on how they logged in. If logged in as an event organizer, the user should be able to create events and manage other events they have previously created. Organizers can view the participants who have registered and entered the event, they can monitor the results of participants after the race has concluded. If the user has logged in as a participant, they can browse upcoming events, enter into events they are interested in, and can review their personal results from past events. Participants can view the route in which the race will take as well as the weather forecast on race day. 
 
 PROJECT STRUCTURE:
+MAIN BRANCH - 
 .github/workflows: check-docs.yml
   
 docs: 
@@ -18,6 +23,41 @@ docs:
   User roles, 
   updated raceday system.png
 
+  MASTER BRANCH -
+  .github/workflows:
+    build-and-test.yml
+
+  RaceDayPOE2.API.Test.cs:
+    AuthControllerTests.cs
+    EventControllerTests.cs
+    RaceDayPOE2.API.Test.csproj
+    RoleAuthorizationTests.cs
+
+  RaceDayPOE2.API:
+    Controllers
+    DTOs
+    Data
+    Models
+    Properties
+    PasswordMigrationRunner.cs
+    Program.cs
+    RaceDayPOE2.API.csproj
+    RaceDayPOE2.API.http
+    appsettings.Development.json
+    appsettings.json
+
+  RaceDayPOE2.MVC:
+    Controllers
+    Models
+    Properties
+    Services
+    Views
+    wwwroot
+    Program.cs
+    RaceDayPOE2.MVC.csproj
+    appsettings.Development.json
+    appsettings.json
+
 Succesfull Build Screenshot PART1: 
 <img width="632" height="482" alt="success workflow" src="https://github.com/user-attachments/assets/72bed10a-8b2d-4a98-a415-6dbc46f90045" />
 
@@ -26,7 +66,7 @@ SUCCESSFULL build screenshot PART 2:
 
 
 PROJECT SET-UP:
-Before running the RaceDay API ensure that you have the follwoing installed:
+Before running the RaceDay Solution ensure that you have the follwoing installed:
 - Visual Studio 2022
 - .NET SDK version required (NET 8.0)
 - SQL SERVER MANAGEMENT STUDIO
@@ -49,9 +89,10 @@ to run the RaceDay APIs:
 - open the solution in Visual Studio 2022
 - build the solution
 - run the project
-- Swagger UI should open in your browser with the API-endpoints 
+- Swagger UI should open in your browser with the API-endpoints
+- MVC Project should open in your browser with user interface 
 
 PROJECT STATUS:
-In Progress. 
+Completed. 
 
 Author: Zandile Mahlangu (ST10486939)
